@@ -18,5 +18,11 @@
             return new List<Song>(_songsRepo);
         }
 
+        public Song Add(Song song)
+        {
+            song.Id = nextId++;
+            _songsRepo.Add(song);
+            return song;
+        }
     }
 }
