@@ -1,0 +1,6 @@
+@DR_MusicRest_HostAddress = http://localhost:5121
+
+GET {{DR_MusicRest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
