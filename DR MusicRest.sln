@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36915.13 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DR MusicRest", "DR MusicRest\DR MusicRest.csproj", "{32036B01-86D5-4426-8D61-F18DE72748C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSongs", "TestSongs\TestSongs.csproj", "{928E2778-775F-4095-A49F-0AED6DE50C2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{32036B01-86D5-4426-8D61-F18DE72748C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32036B01-86D5-4426-8D61-F18DE72748C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32036B01-86D5-4426-8D61-F18DE72748C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{928E2778-775F-4095-A49F-0AED6DE50C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{928E2778-775F-4095-A49F-0AED6DE50C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{928E2778-775F-4095-A49F-0AED6DE50C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{928E2778-775F-4095-A49F-0AED6DE50C2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
