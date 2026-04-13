@@ -33,8 +33,18 @@ namespace DR_MusicRest.Controllers
 
         // POST api/<SongsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Song> Post([FromBody] Song songs)
         {
+            if (songs == null)
+            {
+                return BadRequest() ;
+            }
+            else
+            {
+                _songsRepo.Add(songs);
+                return CreatedAtAction(nameof(Get), new { id = songs.Id }, songs);
+            }
+                
         }
 
         // PUT api/<SongsController>/5
