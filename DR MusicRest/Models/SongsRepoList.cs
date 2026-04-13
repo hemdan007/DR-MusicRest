@@ -12,7 +12,7 @@
             _songsRepo.Add(new Song { Id = nextId++, Title = "Dirty Diana", Artist = "M J", Duration = 200, PublicationYear = 1999 });
         }
 
-        public List <Song>  GetAllSongs()
+        public List <Song>  GetAll()
         {
             // Return a copy of the list to prevent external modification
             return new List<Song>(_songsRepo);
