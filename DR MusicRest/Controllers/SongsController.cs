@@ -19,7 +19,7 @@ namespace DR_MusicRest.Controllers
         // GET: api/<SongsController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<Song>> Get()
+        public ActionResult<IEnumerable<Song>> Get()
         {
             return Ok(_songsRepo.GetAll());
         }
