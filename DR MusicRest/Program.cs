@@ -1,4 +1,8 @@
+using System.Text;
 using DR_MusicRest.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +34,35 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<ISongsRepo, SongsRepoList>();
 
 
+//JWT Authentication excersise 5
+
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]!);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
+
+builder.Services.AddAuthorization();
+
+
+
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -43,7 +76,10 @@ if (app.Environment.IsDevelopment())
 // Enable CORS using the defined policy
 app.UseCors("AllowAll");
 
-app.UseAuthorization();
+
+app.UseAuthentication(); // Checks "Who are you?"
+app.UseAuthorization();  // Checks "Are you allowed to be here?"
+
 
 app.MapControllers();
 
