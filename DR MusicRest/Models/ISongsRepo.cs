@@ -2,9 +2,9 @@
 {
     public interface ISongsRepo
     {
-        List<Song> GetAll();
+        IEnumerable<Song> GetAll(string? search = null);
 
-        //Song Add(Song song);
+        Song Add(Song song);
         //Song? GetSongById(int id);
         //Song? RemoveSong(int id);
         //Song? UpdateSong(int id, Song updatedSong);

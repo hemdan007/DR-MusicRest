@@ -19,11 +19,10 @@ namespace DR_MusicRest.Controllers
         // GET: api/<SongsController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<Song>> Get()
+        public ActionResult<IEnumerable<Song>> Get([FromQuery] string? search)
         {
-            return Ok(_songsRepo.GetAll());
+            return Ok(_songsRepo.GetAll(search));
         }
-
         // GET api/<SongsController>/5
         [HttpGet("{id}")]
         public string Get(int id)
@@ -33,8 +32,18 @@ namespace DR_MusicRest.Controllers
 
         // POST api/<SongsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Song> Post([FromBody] Song songs)
         {
+            if (songs == null)
+            {
+                return BadRequest() ;
+            }
+            else
+            {
+                _songsRepo.Add(songs);
+                return CreatedAtAction(nameof(Get), new { id = songs.Id }, songs);
+            }
+                
         }
 
         // PUT api/<SongsController>/5
