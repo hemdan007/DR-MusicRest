@@ -2,7 +2,7 @@
 {
     public interface ISongsRepo
     {
-        IEnumerable<Song> GetAll();
+        IEnumerable<Song> GetAll(string? search = null);
 
         Song Add(Song song);
         //Song? GetSongById(int id);

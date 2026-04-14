@@ -12,10 +12,18 @@
             _songsRepo.Add(new Song { Id = nextId++, Title = "Dirty Diana", Artist = "M J", Duration = 200, PublicationYear = 1999 });
         }
 
-        public IEnumerable <Song>  GetAll()
+        public IEnumerable<Song> GetAll(string? search = null)
         {
-            // Return a copy of the list to prevent external modification
-            return new List<Song>(_songsRepo);
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                return new List<Song>(_songsRepo);
+            }
+
+            return _songsRepo
+                .Where(s =>
+                    s.Title.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                    s.Artist.Contains(search, StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
 
         public Song Add(Song song)

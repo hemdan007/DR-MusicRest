@@ -13,7 +13,7 @@ namespace TestSongs
             var repo = new SongsRepoList();
 
             // Act
-            var result = repo.GetAll();
+            var result = repo.GetAll().ToList();
 
             // Assert
             Assert.NotNull(result);
@@ -27,14 +27,14 @@ namespace TestSongs
         {
             // Arrange
             var repo = new SongsRepoList();
-            var initialCount = repo.GetAll().Count;
-            var returnedList = repo.GetAll();
+            var initialCount = repo.GetAll().ToList().Count;
+            var returnedList = repo.GetAll().ToList();
 
             // Act - modify the returned list
             returnedList.RemoveAt(0);
 
             // Assert - repository should still return the original count (GetAll returns a copy)
-            Assert.Equal(initialCount, repo.GetAll().Count);
+            Assert.Equal(initialCount, repo.GetAll().ToList().Count);
             // And each call to GetAll returns a different List instance
             Assert.NotSame(returnedList, repo.GetAll());
         }
@@ -44,7 +44,7 @@ namespace TestSongs
         {
             // Arrange
             var repo = new SongsRepoList();
-            var before = repo.GetAll().Count;
+            var before = repo.GetAll().ToList().Count;
             var newSong = new Song
             {
                 // Id intentionally left at default (0) - repo should assign
@@ -61,7 +61,7 @@ namespace TestSongs
             // Assert
             Assert.NotNull(added);
             Assert.True(added.Id > 0, "Expected assigned Id to be > 0.");
-            Assert.Equal(before + 1, after.Count);
+            Assert.Equal(before + 1, after.ToList().Count);
             Assert.Contains(after, s => s.Id == added.Id && s.Title == "New Track");
         }
 
@@ -93,6 +93,39 @@ namespace TestSongs
             // Act & Assert
             Assert.NotEqual(s1.Id, s2.Id);
             Assert.True(s2.Id > s1.Id);
+        }
+
+        [Fact]
+        public void GetAll_FilterByPublicationYear_ReturnsOnlyRecentSongs()
+        {
+            // Arrange
+            var repo = new SongsRepoList();
+
+            // Act - filter client-side using LINQ
+            var recent = repo.GetAll().Where(s => s.PublicationYear >= 2020).ToList();
+
+            // Assert
+            // From seeded data: "Baby" (2020) and "Darling" (2021) -> 2 songs
+            Assert.Equal(2, recent.Count);
+            Assert.All(recent, s => Assert.True(s.PublicationYear >= 2020));
+            // Ensure repository data unchanged
+            Assert.Equal(4, repo.GetAll().ToList().Count);
+        }
+
+        [Fact]
+        public void GetAll_FilterByArtist_ReturnsMatchesWithoutChangingRepo()
+        {
+            // Arrange
+            var repo = new SongsRepoList();
+
+            // Act - filter client-side by exact artist
+            var mjSongs = repo.GetAll().Where(s => s.Artist == "M J").ToList();
+
+            // Assert
+            Assert.Single(mjSongs);
+            Assert.Equal("Dirty Diana", mjSongs[0].Title);
+            // Ensure repository data unchanged
+            Assert.Equal(4, repo.GetAll().ToList().Count);
         }
     }
 }
