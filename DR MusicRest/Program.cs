@@ -2,7 +2,7 @@ using System.Text;
 using DR_MusicRest.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +32,13 @@ builder.Services.AddControllers();
 
 // Dependency Injection: Register the SongsRepoList as the implementation for ISongsRepo
 builder.Services.AddSingleton<ISongsRepo, SongsRepoList>();
+
+builder.Services.AddDbContext<SongsDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ISongsRepo, SongsDatabase>();
+
+
 
 
 //JWT Authentication excersise 5
