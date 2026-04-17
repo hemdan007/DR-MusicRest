@@ -91,8 +91,16 @@ namespace DR_MusicRest.Controllers
 
         // DELETE api/<SongsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Song> Delete(int id)
         {
+            var deleted = _songsRepo.DeleteSong(id);
+
+            if (deleted == null)
+                return NotFound($"There is no song with id {id} found.");
+
+            return Ok($"{deleted} has been deleted.");
         }
     }
 }

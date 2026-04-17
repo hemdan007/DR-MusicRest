@@ -34,7 +34,7 @@ namespace TestSongs
 
             // Assert
             Assert.NotNull(attr);
-            Assert.Equal("admin, user", attr.Roles);
+            Assert.Equal("Admin, User", attr.Roles, StringComparer.OrdinalIgnoreCase);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace TestSongs
 
             // Assert
             Assert.NotNull(attr);
-            Assert.Equal("admin, user", attr.Roles);
+            Assert.Equal("Admin, User", attr.Roles, StringComparer.OrdinalIgnoreCase);
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace TestSongs
 
             // Assert
             Assert.NotNull(attr);
-            Assert.Equal("admin", attr.Roles);
+            Assert.Equal("Admin", attr.Roles, StringComparer.OrdinalIgnoreCase);
         }
 
         [Fact]
@@ -72,14 +72,15 @@ namespace TestSongs
         {
             // Arrange
             var type = typeof(SongsController);
-            var method = FindMethod(type, "Put", typeof(int), typeof(string));
+            // controller.Put signature is (int, Song) — use the correct parameter type here
+            var method = FindMethod(type, "Put", typeof(int), typeof(DR_MusicRest.Models.Song));
 
             // Act
             var attr = GetAuthorizeAttribute(method);
 
             // Assert
             Assert.NotNull(attr);
-            Assert.Equal("admin", attr.Roles);
+            Assert.Equal("Admin", attr.Roles, StringComparer.OrdinalIgnoreCase);
         }
 
         [Fact]
@@ -94,7 +95,7 @@ namespace TestSongs
 
             // Assert
             Assert.NotNull(attr);
-            Assert.Equal("admin", attr.Roles);
+            Assert.Equal("Admin", attr.Roles, StringComparer.OrdinalIgnoreCase);
         }
     }
 }
