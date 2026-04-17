@@ -31,7 +31,7 @@ builder.Services.AddControllers();
 
 
 // Dependency Injection: Register the SongsRepoList as the implementation for ISongsRepo
-builder.Services.AddSingleton<ISongsRepo, SongsRepoList>();
+//builder.Services.AddSingleton<ISongsRepo, SongsRepoList>();
 
 builder.Services.AddDbContext<SongsDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
