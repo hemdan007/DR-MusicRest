@@ -46,5 +46,18 @@ namespace DR_MusicRest.Models
         }
 
 
+        public Song? DeleteSong(int id)
+        {
+            var songToDelete = GetSongById(id);
+            if (songToDelete != null)
+            {
+                _context.Songs.Remove(songToDelete);
+                _context.SaveChanges();
+                return songToDelete;
+            }
+            return null;
+        }
+
+
     }
 }

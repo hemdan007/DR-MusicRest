@@ -6,7 +6,7 @@
 
         Song Add(Song song);
         Song? GetSongById(int id);
-        //Song? RemoveSong(int id);
+        Song? DeleteSong(int id);
         Song? UpdateSong(int id, Song updatedSong);
     }
 }

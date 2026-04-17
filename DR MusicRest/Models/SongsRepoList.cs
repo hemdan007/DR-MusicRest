@@ -56,5 +56,21 @@
             return null;
         }
 
+
+        // Method to delete an existing song by its ID
+        public Song? DeleteSong(int id)
+        {
+            var song = GetSongById(id);
+
+            if (song != null)
+            {
+                _songsRepo.Remove(song);
+                return song;
+            }
+
+            return null;
+        }
+
+
     }
 }
