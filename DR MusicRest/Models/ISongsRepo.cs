@@ -5,8 +5,8 @@
         IEnumerable<Song> GetAll(string? search = null);
 
         Song Add(Song song);
-        //Song? GetSongById(int id);
+        Song? GetSongById(int id);
         //Song? RemoveSong(int id);
-        //Song? UpdateSong(int id, Song updatedSong);
+        Song? UpdateSong(int id, Song updatedSong);
     }
 }

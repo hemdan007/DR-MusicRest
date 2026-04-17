@@ -36,9 +36,16 @@ namespace DR_MusicRest.Controllers
 
         // GET api/<SongsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public ActionResult<Song> Get(int id)
         {
-            return "value";
+            var song = _songsRepo.GetSongById(id);
+            if (song == null)
+                return NotFound($"No songs with id {id} found.");
+            return Ok(song);
+
         }
 
 
@@ -67,8 +74,15 @@ namespace DR_MusicRest.Controllers
 
         // PUT api/<SongsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Song> Put(int id, [FromBody] Song song)
         {
+            var updated = _songsRepo.UpdateSong(id, song);
+            if (updated == null)
+                return NotFound($"No song with id {id} found to update.");
+            return Ok(updated);
+
         }
 
 

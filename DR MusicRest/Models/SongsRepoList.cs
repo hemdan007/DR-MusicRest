@@ -26,11 +26,35 @@
                 .ToList();
         }
 
+        public Song? GetSongById(int id)
+        {
+            return _songsRepo.FirstOrDefault(m => m.Id == id);
+        }
+
+
         public Song Add(Song song)
         {
             song.Id = nextId++;
             _songsRepo.Add(song);
             return song;
         }
+
+
+
+        public Song? UpdateSong(int id, Song updatedSong)
+        {
+            var existingSong = GetSongById(id);
+            if (existingSong != null)
+            {
+                existingSong.Title = updatedSong.Title;
+                existingSong.Artist = updatedSong.Artist;
+                existingSong.Duration = updatedSong.Duration;
+                existingSong.PublicationYear = updatedSong.PublicationYear;
+                
+                return existingSong;
+            }
+            return null;
+        }
+
     }
 }
